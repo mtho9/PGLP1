@@ -23,36 +23,40 @@ json:
 
 object:
     OPEN_BRACE CLOSE_BRACE
+      { printf("Parsed empty object\n"); }
   | OPEN_BRACE members CLOSE_BRACE
+      { printf("Parsed object with members\n"); }
   ;
 
 members:
-    pair
-  | members COMMA pair
+    pair { printf("Parsed member\n"); }
+  | members COMMA pair { printf("Parsed multiple members\n"); }
   ;
 
 pair:
-    STRING COLON value
+    STRING COLON value { printf("Parsed pair: %s\n", $1); }
   ;
 
 array:
     OPEN_BRACKET CLOSE_BRACKET
+      { printf("Parsed empty array\n"); }
   | OPEN_BRACKET elements CLOSE_BRACKET
+      { printf("Parsed array with elements\n"); }
   ;
 
 elements:
-    value
-  | elements COMMA value
+    value { printf("Parsed element\n"); }
+  | elements COMMA value { printf("Parsed multiple elements\n"); }
   ;
 
 value:
-    STRING
-  | NUMBER
-  | TRUE_TOKEN
-  | FALSE_TOKEN
-  | NULL_TOKEN
-  | object
-  | array
+    STRING { printf("Parsed string: %s\n", $1); }
+  | NUMBER { printf("Parsed number: %s\n", $1); }
+  | TRUE_TOKEN { printf("Parsed TRUE\n"); }
+  | FALSE_TOKEN { printf("Parsed FALSE\n"); }
+  | NULL_TOKEN { printf("Parsed NULL\n"); }
+  | object { printf("Parsed nested object\n"); }
+  | array { printf("Parsed nested array\n"); }
   ;
 
 %%
