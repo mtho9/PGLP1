@@ -34,7 +34,7 @@ members:
   ;
 
 pair:
-    STRING COLON value { printf("Parsed pair: %s\n", $1); }
+    STRING COLON value { printf("Parsed pair: %s\n", $1); free($1); }
   ;
 
 array:
@@ -50,8 +50,8 @@ elements:
   ;
 
 value:
-    STRING { printf("Parsed string: %s\n", $1); }
-  | NUMBER { printf("Parsed number: %s\n", $1); }
+    STRING { printf("Parsed string: %s\n", $1); free($1); }
+  | NUMBER { printf("Parsed number: %s\n", $1); free($1); }
   | TRUE_TOKEN { printf("Parsed TRUE\n"); }
   | FALSE_TOKEN { printf("Parsed FALSE\n"); }
   | NULL_TOKEN { printf("Parsed NULL\n"); }
