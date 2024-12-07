@@ -9,9 +9,11 @@ void yyerror(const char* msg);
 
 %union {
     char* str;
+    double num;  // numeric vals
 }
 
-%token NULL_TOKEN TRUE_TOKEN FALSE_TOKEN NUMBER STRING
+%token <str> NULL_TOKEN TRUE_TOKEN FALSE_TOKEN STRING
+%token <num> NUMBER
 %token OPEN_BRACE CLOSE_BRACE OPEN_BRACKET CLOSE_BRACKET COLON COMMA
 
 %%
@@ -51,7 +53,7 @@ elements:
 
 value:
     STRING { printf("Parsed string: %s\n", $1); free($1); }
-  | NUMBER { printf("Parsed number: %s\n", $1); free($1); }
+  | NUMBER { printf("Parsed number: %f\n", $1); }
   | TRUE_TOKEN { printf("Parsed TRUE\n"); }
   | FALSE_TOKEN { printf("Parsed FALSE\n"); }
   | NULL_TOKEN { printf("Parsed NULL\n"); }
